@@ -12,7 +12,9 @@ public:
     explicit Baseball(const string& question) : question(question) {}
     GuessResult guess(const string& guessNumber) {
         assertIlegalArgument(guessNumber);
-        return { true, 3, 0 };
+        if (guessNumber == question)
+            return { true, 3, 0 };
+        return { false, 0, 0 };
     }
 
     void assertIlegalArgument(const std::string& guessNumber)
