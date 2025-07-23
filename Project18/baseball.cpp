@@ -12,13 +12,22 @@ public:
     explicit Baseball(const string& question) : question(question) {}
     GuessResult guess(const string& guessNumber) {
         assertIlegalArgument(guessNumber);
+
         if (guessNumber == question)
             return { true, 3, 0 };
-        if (guessNumber == "124")
-            return { false, 2, 0 };
-        if (guessNumber == "132")
-            return { false, 1, 2 };
-        return { false, 0, 0 };
+
+        GuessResult result = { false, 0, 0 };
+        for (int i=0; i <3 ;i++) {
+            for (int j = 0; j < 3; j++) {
+                if (guessNumber[i] == question[j]) {
+                    if (i == j)
+                        result.strikes++;
+                    else
+                        result.balls++;
+                }
+            }
+        }
+        return result;
     }
 
     void assertIlegalArgument(const std::string& guessNumber)
